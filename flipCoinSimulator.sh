@@ -1,27 +1,47 @@
 #! /bin/bash -x
 
-read -p "how many times you wanna flip coin?" n
 #declared an array to save result of toss
 declare -a arr1
+
+#declared an count variable to count an head and tails
 countH=0
 countT=0
-
-for ((i=1; i<=n; i++))
+i=0
+while [ 'true' ]
 do
-toss=$((1+RANDOM%2))
-if (($toss==1))
-then
-        arr1[$i]="head"
-        countH=$(($countH+1))
+        toss=$((1+RANDOM%2))
+        if (($toss==1))
+        then
+                arr1[$i]="head"
+                countH=$(($countH+1))
         elif (($toss==2))
         then
                 arr1[$i]="tail"
                 countT=$(($countT+1))
-        else
+                else
                 echo "invalid choice"
-fi
+        fi
+        if (($countH==21))
+        then
+                echo "head comes 21 times"
+                break;
+        fi
+        if (($countT==21))
+        then
+                echo "tail comes 21 times"
+                break;
+        fi
+((i++))
 done
-echo "$countH times Head Wins and $countT times tail wins "
 
+# Checking winner win by how many count
+if (($countH>$countT))
+then
+        temp=$(($countH-$countT))
+        echo "Head is Winner by $temp"
+else
+        temp2=$(($countT-$countH))
+        echo "Tail is winner by $temp2"
+fi
 
 
